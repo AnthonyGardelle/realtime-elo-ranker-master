@@ -5,10 +5,11 @@
   "keywords": [],
   "author": "",
   "scripts": {
-    "start": "LIVERELOAD_PORT=35729 nodemon --watch swagger.yaml index.mjs"
+    "start": "cross-env LIVERELOAD_PORT=35729 nodemon --watch swagger.yaml index.mjs"
   },
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "express": "^4.21.2",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"

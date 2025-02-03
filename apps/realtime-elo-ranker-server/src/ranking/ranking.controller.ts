@@ -1,0 +1,30 @@
+import { Controller, Get, NotFoundException } from '@nestjs/common';
+import { RankingService } from './ranking.service';
+
+@Controller('api/ranking')
+export class RankingController {
+  constructor(private readonly rankingService: RankingService) { }
+
+  /**
+   * Récupère le classement des joueurs
+   */
+  @Get()
+  getRanking() {
+    return new Promise((resolve, reject) => {
+      this.rankingService.getRanking((error, ranking) => {
+        if (error) {
+          return reject(error);
+        }
+
+        if (!ranking || ranking.length === 0) {
+          return reject(new NotFoundException({
+            code: 404,
+            message: "Le classement n'est pas disponible car aucun joueur n'existe.",
+          }));
+        }
+
+        resolve(ranking);
+      });
+    });
+  }
+}
