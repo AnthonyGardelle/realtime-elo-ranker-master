@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RankingController = void 0;
 const common_1 = require("@nestjs/common");
+const rxjs_1 = require("rxjs");
 const ranking_service_1 = require("./ranking.service");
 let RankingController = class RankingController {
     constructor(rankingService) {
@@ -32,6 +33,9 @@ let RankingController = class RankingController {
             });
         });
     }
+    subscribeToRankingUpdates() {
+        return this.rankingService.getRankingUpdates();
+    }
 };
 exports.RankingController = RankingController;
 __decorate([
@@ -40,6 +44,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], RankingController.prototype, "getRanking", null);
+__decorate([
+    (0, common_1.Sse)('events'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", rxjs_1.Observable)
+], RankingController.prototype, "subscribeToRankingUpdates", null);
 exports.RankingController = RankingController = __decorate([
     (0, common_1.Controller)('api/ranking'),
     __metadata("design:paramtypes", [ranking_service_1.RankingService])

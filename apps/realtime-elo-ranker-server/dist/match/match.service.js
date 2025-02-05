@@ -18,12 +18,14 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const match_entity_1 = require("./entities/match.entity");
 const player_service_1 = require("../player/player.service");
+const ranking_service_1 = require("../ranking/ranking.service");
 const player_entity_1 = require("../player/entities/player.entity");
 let MatchService = class MatchService {
-    constructor(matchRepository, playerService, playerRepository) {
+    constructor(matchRepository, playerService, playerRepository, rankingService) {
         this.matchRepository = matchRepository;
         this.playerService = playerService;
         this.playerRepository = playerRepository;
+        this.rankingService = rankingService;
     }
     handlePlayerError(error, callback, role) {
         if (error instanceof common_1.BadRequestException) {
@@ -78,6 +80,14 @@ let MatchService = class MatchService {
                 match.loserId = loser.id;
                 match.loserRank = loser.rank;
                 match.draw = createMatchDto.draw;
+                this.rankingService.emitRankingUpdate({
+                    id: winner.id,
+                    rank: newWinnerRank
+                });
+                this.rankingService.emitRankingUpdate({
+                    id: loser.id,
+                    rank: newLoserRank
+                });
                 this.matchRepository.save(match).then(savedMatch => {
                     this.playerRepository.save(winner).then(() => {
                         this.playerRepository.save(loser).then(() => {
@@ -121,6 +131,7 @@ exports.MatchService = MatchService = __decorate([
     __param(2, (0, typeorm_1.InjectRepository)(player_entity_1.Player)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         player_service_1.PlayerService,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        ranking_service_1.RankingService])
 ], MatchService);
 //# sourceMappingURL=match.service.js.map

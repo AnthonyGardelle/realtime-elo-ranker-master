@@ -15,7 +15,7 @@ let Player = class Player {
 };
 exports.Player = Player;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", String)
 ], Player.prototype, "id", void 0);
 __decorate([

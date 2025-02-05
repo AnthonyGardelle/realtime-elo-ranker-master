@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const player_entity_1 = require("./entities/player.entity");
+const ranking_service_1 = require("../ranking/ranking.service");
 let PlayerService = class PlayerService {
-    constructor(playerRepository) {
+    constructor(playerRepository, rankingService) {
         this.playerRepository = playerRepository;
+        this.rankingService = rankingService;
     }
     findAll(callback) {
         this.playerRepository.find()
@@ -34,89 +36,49 @@ let PlayerService = class PlayerService {
         if (!createPlayerDto.id) {
             return callback(new common_1.BadRequestException('L\'identifiant du joueur n\'est pas valide'));
         }
-        this.playerRepository.findOne({ where: { id: createPlayerDto.id } }).then(existingPlayer => {
+        this.playerRepository.findOne({ where: { id: createPlayerDto.id } })
+            .then(existingPlayer => {
             if (existingPlayer) {
                 return callback(new common_1.ConflictException('Le joueur existe déjà'));
             }
-            this.playerRepository.find().then(players => {
+            this.playerRepository.find()
+                .then(players => {
                 const totalRank = players.reduce((sum, player) => sum + player.rank, 0);
-                const averageRank = players.length ? Math.round(totalRank / players.length) : 0;
+                const averageRank = players.length ? Math.round(totalRank / players.length) : 1000;
                 const player = new player_entity_1.Player();
                 player.id = createPlayerDto.id;
-                player.rank = createPlayerDto.rank ?? averageRank;
-                this.playerRepository.save(player).then(savedPlayer => {
+                player.rank = createPlayerDto.rank || averageRank;
+                this.playerRepository.save(player)
+                    .then(savedPlayer => {
+                    this.rankingService.emitRankingUpdate({
+                        id: savedPlayer.id,
+                        rank: savedPlayer.rank
+                    });
                     callback(null, savedPlayer);
-                }).catch(error => {
-                    callback(error);
-                });
-            }).catch(error => {
-                callback(error);
+                })
+                    .catch(error => callback(error));
             });
-        }).catch(error => {
-            callback(error);
         });
     }
     findOne(id, callback) {
         if (!id) {
             return callback(new common_1.BadRequestException('L\'identifiant du joueur n\'est pas valide'));
         }
-        this.playerRepository.findOne({ where: { id: id } })
+        this.playerRepository.findOne({ where: { id } })
             .then(player => {
             if (!player) {
                 return callback(new common_1.UnprocessableEntityException('Le joueur n\'existe pas'));
             }
             callback(null, player);
         })
-            .catch(error => {
-            callback(error);
-        });
-    }
-    update(id, updatePlayerDto, callback) {
-        this.playerRepository.findOne({ where: { id: id } })
-            .then(player => {
-            if (!player) {
-                return callback(new common_1.UnprocessableEntityException('Le joueur n\'existe pas'));
-            }
-            if (updatePlayerDto.id && updatePlayerDto.id !== id) {
-                return callback(new common_1.BadRequestException('Modification de l\'ID non autorisée'));
-            }
-            Object.assign(player, updatePlayerDto);
-            this.playerRepository.save(player).then(updatedPlayer => {
-                callback(null, updatedPlayer);
-            }).catch(error => {
-                callback(error);
-            });
-        })
-            .catch(error => {
-            callback(error);
-        });
-    }
-    delete(id, callback) {
-        this.playerRepository.findOne({ where: { id: id } })
-            .then(player => {
-            if (!player) {
-                return callback(new common_1.UnprocessableEntityException('Le joueur n\'existe pas'));
-            }
-            this.playerRepository.delete({ id: id })
-                .then(result => {
-                if (result.affected === 0) {
-                    return callback(new common_1.BadRequestException('Erreur lors de la suppression du joueur'));
-                }
-                callback(null, result);
-            })
-                .catch(error => {
-                callback(error);
-            });
-        })
-            .catch(error => {
-            callback(error);
-        });
+            .catch(error => callback(error));
     }
 };
 exports.PlayerService = PlayerService;
 exports.PlayerService = PlayerService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(player_entity_1.Player)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        ranking_service_1.RankingService])
 ], PlayerService);
 //# sourceMappingURL=player.service.js.map

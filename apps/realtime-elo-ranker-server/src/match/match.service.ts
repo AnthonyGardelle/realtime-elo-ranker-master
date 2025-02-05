@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Match } from './entities/match.entity';
 import { UpdateMatchDto } from './dto/update-match.dto';
 import { PlayerService } from 'src/player/player.service';
+import { RankingService } from 'src/ranking/ranking.service';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { Player } from 'src/player/entities/player.entity';
 
@@ -15,6 +16,7 @@ export class MatchService {
     private playerService: PlayerService,
     @InjectRepository(Player)
     private playerRepository: Repository<Player>,
+    private rankingService: RankingService
   ) { }
 
   handlePlayerError(error: any, callback: (error: any, result?: any) => void, role: string) {
@@ -75,6 +77,15 @@ export class MatchService {
         match.loserId = loser.id;
         match.loserRank = loser.rank;
         match.draw = createMatchDto.draw;
+
+        this.rankingService.emitRankingUpdate({ 
+          id: winner.id, 
+          rank: newWinnerRank 
+        });
+        this.rankingService.emitRankingUpdate({ 
+          id: loser.id, 
+          rank: newLoserRank 
+        });
 
         this.matchRepository.save(match).then(savedMatch => {
           this.playerRepository.save(winner).then(() => {

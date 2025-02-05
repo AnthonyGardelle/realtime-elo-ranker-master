@@ -16,23 +16,39 @@ exports.RankingService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const rxjs_1 = require("rxjs");
+const operators_1 = require("rxjs/operators");
+const event_emitter_1 = require("@nestjs/event-emitter");
 const player_entity_1 = require("../player/entities/player.entity");
 let RankingService = class RankingService {
     constructor(playerRepository) {
         this.playerRepository = playerRepository;
+        this.rankingEmitter = new event_emitter_1.EventEmitter2();
     }
     getRanking(callback) {
-        this.playerRepository.find({ order: { rank: 'DESC' } })
+        this.playerRepository.find()
             .then(players => {
-            const ranking = players.map(player => ({
-                id: player.id,
-                rank: player.rank,
-            }));
-            callback(null, ranking);
+            callback(null, players);
         })
             .catch(error => {
             callback(error);
         });
+    }
+    getRankingUpdates() {
+        return (0, rxjs_1.fromEvent)(this.rankingEmitter, 'rankingUpdate').pipe((0, operators_1.map)(player => {
+            const messageData = {
+                type: 'RankingUpdate',
+                player
+            };
+            return new MessageEvent('message', {
+                data: messageData,
+                lastEventId: '',
+                origin: '',
+            });
+        }));
+    }
+    emitRankingUpdate(player) {
+        this.rankingEmitter.emit('rankingUpdate', player);
     }
 };
 exports.RankingService = RankingService;

@@ -21,6 +21,8 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@nestjs/event-emitter": "^3.0.0",
+    "rxjs": "^7.8.1",
     "sqlite3": "^5.1.7"
   },
   "pnpm": {
