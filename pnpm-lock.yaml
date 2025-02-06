@@ -11,6 +11,9 @@ importers:
       '@nestjs/event-emitter':
         specifier: ^3.0.0
         version: 3.0.0(@nestjs/common@11.0.6(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.6)
+      '@nestjs/testing':
+        specifier: ^11.0.1
+        version: 11.0.6(@nestjs/common@11.0.6(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.6)(@nestjs/platform-express@11.0.6)
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1

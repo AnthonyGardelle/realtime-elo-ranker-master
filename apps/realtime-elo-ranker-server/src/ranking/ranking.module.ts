@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { RankingService } from './ranking.service';
-import { RankingController } from './ranking.controller';
-import { Player } from 'src/player/entities/player.entity';
+import { RankingService } from './services/ranking.service';
+import { RankingController } from './controllers/ranking.controller';
+import { Player } from '../player/entities/player.entity';
 
 @Module({
   imports: [

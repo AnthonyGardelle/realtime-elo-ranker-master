@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PlayerService } from './player.service';
-import { PlayerController } from './player.controller';
+import { PlayerService } from '../player/services/player.service';
+import { PlayerController } from '../player/controllers/player.controller';
 import { Player } from './entities/player.entity';
 import { RankingModule } from '../ranking/ranking.module';
 
@@ -14,4 +14,4 @@ import { RankingModule } from '../ranking/ranking.module';
   providers: [PlayerService],
   exports: [PlayerService],
 })
-export class PlayerModule {}
+export class PlayerModule { }

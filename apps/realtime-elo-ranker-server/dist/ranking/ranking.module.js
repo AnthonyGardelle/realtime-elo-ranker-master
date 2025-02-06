@@ -10,8 +10,8 @@ exports.RankingModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const event_emitter_1 = require("@nestjs/event-emitter");
-const ranking_service_1 = require("./ranking.service");
-const ranking_controller_1 = require("./ranking.controller");
+const ranking_service_1 = require("./services/ranking.service");
+const ranking_controller_1 = require("./controllers/ranking.controller");
 const player_entity_1 = require("../player/entities/player.entity");
 let RankingModule = class RankingModule {
 };
