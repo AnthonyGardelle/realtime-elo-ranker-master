@@ -25,13 +25,11 @@ let RankingService = class RankingService {
     initializeRankings() {
         this.playerService.findAll((error, players) => {
             if (!error && players) {
-                console.log(players);
                 this.rankings = players.sort((a, b) => b.rank - a.rank);
             }
         });
     }
     getRanking(callback) {
-        console.log(this.rankings);
         callback(null, this.rankings);
     }
     updateRanking(player) {

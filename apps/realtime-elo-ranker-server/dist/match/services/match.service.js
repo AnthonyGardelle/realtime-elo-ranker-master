@@ -58,6 +58,9 @@ let MatchService = class MatchService {
                 if (error) {
                     return this.handlePlayerError(error, callback, 'perdant');
                 }
+                if (winner.id === loser.id) {
+                    return callback(new common_1.BadRequestException('Le gagnant et le perdant ne peuvent pas être le même joueur'));
+                }
                 const { newWinnerRank, newLoserRank } = this.calculateElo(winner.rank, loser.rank, createMatchDto.draw);
                 winner.rank = newWinnerRank;
                 loser.rank = newLoserRank;

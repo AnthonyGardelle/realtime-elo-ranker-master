@@ -11,6 +11,7 @@
     "apps:server:dev": "pnpm run --filter ./apps/realtime-elo-ranker-server start",
     "apps:server:test": "pnpm run --filter ./apps/realtime-elo-ranker-server test",
     "apps:server:cov": "pnpm run --filter ./apps/realtime-elo-ranker-server test --coverage",
+    "apps:simulator:dev": "pnpm run --filter ./apps/realtime-elo-ranker-simulator start",
     "libs:ui:build": "pnpm run --filter ./libs/ui build",
     "libs:ui:test": "pnpm run --filter ./libs/ui test",
     "docs:swagger:start": "pnpm run --filter ./docs/swagger start"
