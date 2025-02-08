@@ -19,18 +19,34 @@ let RankingService = class RankingService {
     constructor(playerService, eventService) {
         this.playerService = playerService;
         this.eventService = eventService;
+        this.rankings = [];
+        this.initializeRankings();
+    }
+    initializeRankings() {
+        this.playerService.findAll((error, players) => {
+            if (!error && players) {
+                console.log(players);
+                this.rankings = players.sort((a, b) => b.rank - a.rank);
+            }
+        });
     }
     getRanking(callback) {
-        this.playerService.findAll((error, players) => {
-            if (error) {
-                callback(error);
-                return;
-            }
-            callback(null, players);
-        });
+        console.log(this.rankings);
+        callback(null, this.rankings);
+    }
+    updateRanking(player) {
+        const index = this.rankings.findIndex(p => p.id === player.id);
+        if (index !== -1) {
+            this.rankings[index].rank = player.rank;
+        }
+        else {
+            this.rankings.push(player);
+        }
+        this.rankings.sort((a, b) => b.rank - a.rank);
     }
     getRankingUpdates() {
         return (0, rxjs_1.fromEvent)(this.eventService.getRankingEmitter(), 'rankingUpdate').pipe((0, operators_1.map)((player) => {
+            this.updateRanking({ id: player.id, rank: player.rank });
             const messageData = {
                 type: 'RankingUpdate',
                 player
