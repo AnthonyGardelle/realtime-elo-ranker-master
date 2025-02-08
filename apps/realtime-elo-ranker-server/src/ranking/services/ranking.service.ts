@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Observable, fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Player } from '../../player/entities/player.entity';
+import { PlayerService } from '../../player/services/player.service';
+import { EventsService } from '../../events/services/events.service';
 
 interface RankingUpdateEvent {
   id: string;
@@ -13,26 +12,25 @@ interface RankingUpdateEvent {
 
 @Injectable()
 export class RankingService {
-  private readonly rankingEmitter = new EventEmitter2();
 
   constructor(
-    @InjectRepository(Player)
-    private playerRepository: Repository<Player>,
+    private playerService: PlayerService,
+    private eventService: EventsService
   ) { }
 
   getRanking(callback: (error: any, ranking?: Player[]) => void): void {
-    this.playerRepository.find()
-      .then(players => {
-        callback(null, players);
-      })
-      .catch(error => {
+    this.playerService.findAll((error, players) => {
+      if (error) {
         callback(error);
-      });
+        return;
+      }
+      callback(null, players);
+    });
   }
 
   getRankingUpdates(): Observable<MessageEvent> {
-    return fromEvent<RankingUpdateEvent>(this.rankingEmitter, 'rankingUpdate').pipe(
-      map(player => {
+    return fromEvent(this.eventService.getRankingEmitter(), 'rankingUpdate').pipe(
+      map((player: RankingUpdateEvent) => {
         const messageData = {
           type: 'RankingUpdate',
           player
@@ -44,9 +42,5 @@ export class RankingService {
         });
       })
     );
-  }
-
-  emitRankingUpdate(player: { id: string; rank: number }): void {
-    this.rankingEmitter.emit('rankingUpdate', player);
   }
 }

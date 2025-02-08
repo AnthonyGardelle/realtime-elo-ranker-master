@@ -26,7 +26,6 @@ export class RankingController {
 
   @Sse('events')
   subscribeToRankingUpdates(): Observable<MessageEvent> {
-    console.log("Test");
     return this.rankingService.getRankingUpdates();
   }
 }

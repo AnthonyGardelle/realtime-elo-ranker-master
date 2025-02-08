@@ -3,24 +3,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Player } from '../entities/player.entity';
 import { CreatePlayerDto } from '../dto/create-player.dto';
-import { RankingService } from '../../ranking/services/ranking.service';
+import { EventsService } from '../../events/services/events.service';
 
 @Injectable()
 export class PlayerService {
   constructor(
     @InjectRepository(Player)
     private playerRepository: Repository<Player>,
-    private rankingService: RankingService
+    private eventsService: EventsService,
   ) { }
 
-  findAll(callback: (error: any, result?: any) => void) {
+  findAll(callback: (error: any, result?: Player[]) => void) {
     this.playerRepository.find()
       .then(players => {
         callback(null, players);
       })
-      .catch(error => {
-        callback(error);
-      });
+      .catch(error => callback(error));
   }
 
   create(createPlayerDto: CreatePlayerDto, callback: (error: any, result?: any) => void) {
@@ -41,12 +39,11 @@ export class PlayerService {
 
             const player = new Player();
             player.id = createPlayerDto.id;
-            player.rank = createPlayerDto.rank || averageRank;
+            player.rank = averageRank;
 
             this.playerRepository.save(player)
               .then(savedPlayer => {
-                // Emit ranking update event
-                this.rankingService.emitRankingUpdate({
+                this.eventsService.emitRankingUpdate({
                   id: savedPlayer.id,
                   rank: savedPlayer.rank
                 });
@@ -68,6 +65,30 @@ export class PlayerService {
           return callback(new UnprocessableEntityException('Le joueur n\'existe pas'));
         }
         callback(null, player);
+      })
+      .catch(error => callback(error));
+  }
+
+  update(player: Player, callback: (error: any) => void) {
+    if (!player.id) {
+      return callback(new BadRequestException('L\'identifiant du joueur n\'est pas valide'));
+    }
+
+    this.playerRepository.findOne({ where: { id: player.id } })
+      .then(existingPlayer => {
+        if (!existingPlayer) {
+          return callback(new UnprocessableEntityException('Le joueur n\'existe pas'));
+        }
+
+        this.playerRepository.save(player)
+          .then(() => {
+            this.eventsService.emitRankingUpdate({
+              id: player.id,
+              rank: player.rank
+            });
+            callback(null);
+          })
+          .catch(error => callback(error));
       })
       .catch(error => callback(error));
   }

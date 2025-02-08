@@ -3,13 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlayerService } from '../player/services/player.service';
 import { PlayerController } from '../player/controllers/player.controller';
 import { Player } from './entities/player.entity';
-import { RankingModule } from '../ranking/ranking.module';
+import { EventsModule } from '../events/events.module';
 
 @Module({
   controllers: [PlayerController],
   imports: [
     TypeOrmModule.forFeature([Player]),
-    RankingModule
+    EventsModule,
   ],
   providers: [PlayerService],
   exports: [PlayerService],

@@ -8,34 +8,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RankingService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
-const event_emitter_1 = require("@nestjs/event-emitter");
-const player_entity_1 = require("../../player/entities/player.entity");
+const player_service_1 = require("../../player/services/player.service");
+const events_service_1 = require("../../events/services/events.service");
 let RankingService = class RankingService {
-    constructor(playerRepository) {
-        this.playerRepository = playerRepository;
-        this.rankingEmitter = new event_emitter_1.EventEmitter2();
+    constructor(playerService, eventService) {
+        this.playerService = playerService;
+        this.eventService = eventService;
     }
     getRanking(callback) {
-        this.playerRepository.find()
-            .then(players => {
+        this.playerService.findAll((error, players) => {
+            if (error) {
+                callback(error);
+                return;
+            }
             callback(null, players);
-        })
-            .catch(error => {
-            callback(error);
         });
     }
     getRankingUpdates() {
-        return (0, rxjs_1.fromEvent)(this.rankingEmitter, 'rankingUpdate').pipe((0, operators_1.map)(player => {
+        return (0, rxjs_1.fromEvent)(this.eventService.getRankingEmitter(), 'rankingUpdate').pipe((0, operators_1.map)((player) => {
             const messageData = {
                 type: 'RankingUpdate',
                 player
@@ -47,14 +42,11 @@ let RankingService = class RankingService {
             });
         }));
     }
-    emitRankingUpdate(player) {
-        this.rankingEmitter.emit('rankingUpdate', player);
-    }
 };
 exports.RankingService = RankingService;
 exports.RankingService = RankingService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(player_entity_1.Player)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [player_service_1.PlayerService,
+        events_service_1.EventsService])
 ], RankingService);
 //# sourceMappingURL=ranking.service.js.map

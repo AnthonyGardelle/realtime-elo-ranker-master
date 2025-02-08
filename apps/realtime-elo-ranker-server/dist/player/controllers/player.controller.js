@@ -40,38 +40,6 @@ let PlayerController = class PlayerController {
             });
         });
     }
-    findAll() {
-        return new Promise((resolve, reject) => {
-            this.playerService.findAll((error, result) => {
-                if (error) {
-                    reject(error);
-                }
-                else {
-                    resolve(result);
-                }
-            });
-        });
-    }
-    findOne(id) {
-        return new Promise((resolve, reject) => {
-            this.playerService.findOne(id, (error, result) => {
-                if (error) {
-                    if (error instanceof common_1.BadRequestException) {
-                        resolve({ code: 400, message: error.message });
-                    }
-                    else if (error instanceof common_1.UnprocessableEntityException) {
-                        resolve({ code: 422, message: error.message });
-                    }
-                    else {
-                        reject(error);
-                    }
-                }
-                else {
-                    resolve(result);
-                }
-            });
-        });
-    }
 };
 exports.PlayerController = PlayerController;
 __decorate([
@@ -81,19 +49,6 @@ __decorate([
     __metadata("design:paramtypes", [create_player_dto_1.CreatePlayerDto]),
     __metadata("design:returntype", void 0)
 ], PlayerController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], PlayerController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], PlayerController.prototype, "findOne", null);
 exports.PlayerController = PlayerController = __decorate([
     (0, common_1.Controller)('api/player'),
     __metadata("design:paramtypes", [player_service_1.PlayerService])

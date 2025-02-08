@@ -34,7 +34,6 @@ let RankingController = class RankingController {
         });
     }
     subscribeToRankingUpdates() {
-        console.log("Test");
         return this.rankingService.getRankingUpdates();
     }
 };

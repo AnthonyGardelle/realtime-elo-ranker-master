@@ -1,12 +1,13 @@
 import { Repository } from 'typeorm';
 import { Player } from '../entities/player.entity';
 import { CreatePlayerDto } from '../dto/create-player.dto';
-import { RankingService } from '../../ranking/services/ranking.service';
+import { EventsService } from '../../events/services/events.service';
 export declare class PlayerService {
     private playerRepository;
-    private rankingService;
-    constructor(playerRepository: Repository<Player>, rankingService: RankingService);
-    findAll(callback: (error: any, result?: any) => void): void;
+    private eventsService;
+    constructor(playerRepository: Repository<Player>, eventsService: EventsService);
+    findAll(callback: (error: any, result?: Player[]) => void): void;
     create(createPlayerDto: CreatePlayerDto, callback: (error: any, result?: any) => void): void;
     findOne(id: string, callback: (error: any, result?: any) => void): void;
+    update(player: Player, callback: (error: any) => void): void;
 }

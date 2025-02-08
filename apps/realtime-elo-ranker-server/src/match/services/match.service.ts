@@ -2,11 +2,8 @@ import { BadRequestException, Injectable, UnprocessableEntityException } from '@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Match } from '../entities/match.entity';
-import { UpdateMatchDto } from '../dto/update-match.dto';
 import { PlayerService } from '../../player/services/player.service'
-import { RankingService } from 'src/ranking/services/ranking.service';
 import { CreateMatchDto } from '../dto/create-match.dto';
-import { Player } from 'src/player/entities/player.entity';
 
 @Injectable()
 export class MatchService {
@@ -14,9 +11,6 @@ export class MatchService {
     @InjectRepository(Match)
     private matchRepository: Repository<Match>,
     private playerService: PlayerService,
-    @InjectRepository(Player)
-    private playerRepository: Repository<Player>,
-    private rankingService: RankingService
   ) { }
 
   handlePlayerError(error: any, callback: (error: any, result?: any) => void, role: string) {
@@ -46,16 +40,6 @@ export class MatchService {
     return { newWinnerRank, newLoserRank };
   }
 
-  findAll(callback: (error: any, result?: any) => void) {
-    this.matchRepository.find()
-      .then(matchs => {
-        callback(null, matchs);
-      })
-      .catch(error => {
-        callback(error);
-      });
-  }
-
   create(createMatchDto: CreateMatchDto, callback: (error: any, result?: any) => void) {
     this.playerService.findOne(createMatchDto.winner, (error, winner) => {
       if (error) {
@@ -78,28 +62,19 @@ export class MatchService {
         match.loserRank = loser.rank;
         match.draw = createMatchDto.draw;
 
-        this.rankingService.emitRankingUpdate({
-          id: winner.id,
-          rank: newWinnerRank
-        });
-        this.rankingService.emitRankingUpdate({
-          id: loser.id,
-          rank: newLoserRank
-        });
-
         this.matchRepository.save(match).then(savedMatch => {
-          this.playerRepository.save(winner).then(() => {
-            this.playerRepository.save(loser).then(() => {
+          this.playerService.update(winner, (error) => {
+            if (error) {
+              return callback(error);
+            }
+            this.playerService.update(loser, (error) => {
+              if (error) {
+                return callback(error);
+              }
               callback(null, savedMatch);
-            }).catch(error => {
-              callback(error);
             });
-          }).catch(error => {
-            callback(error);
           });
-        }).catch(error => {
-          callback(error);
-        });
+        }).catch(error => callback(error));
       });
     });
   }
@@ -118,13 +93,5 @@ export class MatchService {
       .catch(error => {
         callback(error);
       });
-  }
-
-  update(id: string, updateMatchDto: UpdateMatchDto, callback: (error: any, result?: any) => void) {
-    // TODO
-  }
-
-  delete(id: number) {
-    // TODO
   }
 }

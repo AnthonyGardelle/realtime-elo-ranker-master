@@ -17,20 +17,18 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const player_entity_1 = require("../entities/player.entity");
-const ranking_service_1 = require("../../ranking/services/ranking.service");
+const events_service_1 = require("../../events/services/events.service");
 let PlayerService = class PlayerService {
-    constructor(playerRepository, rankingService) {
+    constructor(playerRepository, eventsService) {
         this.playerRepository = playerRepository;
-        this.rankingService = rankingService;
+        this.eventsService = eventsService;
     }
     findAll(callback) {
         this.playerRepository.find()
             .then(players => {
             callback(null, players);
         })
-            .catch(error => {
-            callback(error);
-        });
+            .catch(error => callback(error));
     }
     create(createPlayerDto, callback) {
         if (!createPlayerDto.id) {
@@ -47,10 +45,10 @@ let PlayerService = class PlayerService {
                 const averageRank = players.length ? Math.round(totalRank / players.length) : 1000;
                 const player = new player_entity_1.Player();
                 player.id = createPlayerDto.id;
-                player.rank = createPlayerDto.rank || averageRank;
+                player.rank = averageRank;
                 this.playerRepository.save(player)
                     .then(savedPlayer => {
-                    this.rankingService.emitRankingUpdate({
+                    this.eventsService.emitRankingUpdate({
                         id: savedPlayer.id,
                         rank: savedPlayer.rank
                     });
@@ -73,12 +71,33 @@ let PlayerService = class PlayerService {
         })
             .catch(error => callback(error));
     }
+    update(player, callback) {
+        if (!player.id) {
+            return callback(new common_1.BadRequestException('L\'identifiant du joueur n\'est pas valide'));
+        }
+        this.playerRepository.findOne({ where: { id: player.id } })
+            .then(existingPlayer => {
+            if (!existingPlayer) {
+                return callback(new common_1.UnprocessableEntityException('Le joueur n\'existe pas'));
+            }
+            this.playerRepository.save(player)
+                .then(() => {
+                this.eventsService.emitRankingUpdate({
+                    id: player.id,
+                    rank: player.rank
+                });
+                callback(null);
+            })
+                .catch(error => callback(error));
+        })
+            .catch(error => callback(error));
+    }
 };
 exports.PlayerService = PlayerService;
 exports.PlayerService = PlayerService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(player_entity_1.Player)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        ranking_service_1.RankingService])
+        events_service_1.EventsService])
 ], PlayerService);
 //# sourceMappingURL=player.service.js.map
