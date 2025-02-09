@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1738942988750" clover="3.2.0">
-  <project timestamp="1738942988750" name="All files">
-    <metrics statements="225" coveredstatements="70" conditionals="40" coveredconditionals="0" methods="52" coveredmethods="9" elements="317" coveredelements="79" complexity="0" loc="225" ncloc="225" packages="14" files="19" classes="19"/>
+<coverage generated="1739036712928" clover="3.2.0">
+  <project timestamp="1739036712928" name="All files">
+    <metrics statements="240" coveredstatements="228" conditionals="44" coveredconditionals="42" methods="61" coveredmethods="60" elements="345" coveredelements="330" complexity="0" loc="240" ncloc="240" packages="16" files="20" classes="20"/>
     <package name="src">
       <metrics statements="21" coveredstatements="9" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="3"/>
       <file name="app.controller.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\app.controller.ts">
@@ -38,292 +38,316 @@
         <line num="9" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="src.match">
-      <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="match.module.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\match.module.ts">
-        <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+    <package name="src.events">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="events.module.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\events\events.module.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
       </file>
     </package>
-    <package name="src.match.controllers">
-      <metrics statements="16" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="1"/>
-      <file name="match.controller.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\controllers\match.controller.ts">
-        <metrics statements="16" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="1"/>
+    <package name="src.events.services">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="events.service.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\events\services\events.service.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="10" type="stmt"/>
+        <line num="2" count="10" type="stmt"/>
+        <line num="5" count="10" type="stmt"/>
+        <line num="6" count="69" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.match">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="match.module.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\match.module.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.match.controllers">
+      <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+      <file name="match.controller.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\controllers\match.controller.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.match.dto">
-      <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="create-match.dto.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\dto\create-match.dto.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-      </file>
-      <file name="update-match.dto.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\dto\update-match.dto.ts">
-        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.match.entities">
       <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="match.entity.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\entities\match.entity.ts">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
       </file>
     </package>
     <package name="src.match.services">
-      <metrics statements="57" coveredstatements="10" conditionals="12" coveredconditionals="0" methods="13" coveredmethods="1"/>
+      <metrics statements="57" coveredstatements="57" conditionals="13" coveredconditionals="13" methods="13" coveredmethods="13"/>
       <file name="match.service.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\match\services\match.service.ts">
-        <metrics statements="57" coveredstatements="10" conditionals="12" coveredconditionals="0" methods="13" coveredmethods="1"/>
+        <metrics statements="57" coveredstatements="57" conditionals="13" coveredconditionals="13" methods="13" coveredmethods="13"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="13" count="24" type="stmt"/>
+        <line num="14" count="24" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+        <line num="30" count="6" type="stmt"/>
+        <line num="33" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="5" type="stmt"/>
+        <line num="38" count="5" type="stmt"/>
+        <line num="41" count="6" type="stmt"/>
+        <line num="45" count="7" type="stmt"/>
+        <line num="46" count="7" type="cond" truecount="1" falsecount="0"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="6" type="stmt"/>
+        <line num="50" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="54" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="58" count="4" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="63" count="4" type="stmt"/>
+        <line num="64" count="4" type="stmt"/>
+        <line num="65" count="4" type="stmt"/>
+        <line num="66" count="4" type="stmt"/>
+        <line num="67" count="4" type="stmt"/>
+        <line num="68" count="4" type="stmt"/>
+        <line num="70" count="4" type="stmt"/>
+        <line num="71" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="80" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="96" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="97" count="1" type="stmt"/>
+        <line num="99" count="3" type="stmt"/>
+        <line num="101" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="102" count="1" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.player">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="player.module.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\player.module.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="48" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="52" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
-        <line num="78" count="0" type="stmt"/>
-        <line num="79" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="80" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="83" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="95" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="98" count="0" type="stmt"/>
-        <line num="100" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="103" count="0" type="stmt"/>
-        <line num="106" count="0" type="stmt"/>
-      </file>
-    </package>
-    <package name="src.player">
-      <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="player.module.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\player.module.ts">
-        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.player.controllers">
-      <metrics statements="15" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
       <file name="player.controller.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\controllers\player.controller.ts">
-        <metrics statements="15" coveredstatements="6" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="1"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
+        <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.player.dto">
-      <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="create-player.dto.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\dto\create-player.dto.ts">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
       </file>
       <file name="update-player.dto.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\dto\update-player.dto.ts">
-        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.player.entities">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="player.entity.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\entities\player.entity.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="6" type="stmt"/>
-        <line num="4" count="6" type="stmt"/>
-        <line num="6" count="6" type="stmt"/>
-        <line num="9" count="6" type="stmt"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="6" count="8" type="stmt"/>
+        <line num="9" count="8" type="stmt"/>
       </file>
     </package>
     <package name="src.player.services">
-      <metrics statements="40" coveredstatements="8" conditionals="10" coveredconditionals="0" methods="15" coveredmethods="1"/>
+      <metrics statements="44" coveredstatements="44" conditionals="8" coveredconditionals="8" methods="18" coveredmethods="18"/>
       <file name="player.service.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\player\services\player.service.ts">
-        <metrics statements="40" coveredstatements="8" conditionals="10" coveredconditionals="0" methods="15" coveredmethods="1"/>
-        <line num="1" count="4" type="stmt"/>
-        <line num="2" count="4" type="stmt"/>
-        <line num="3" count="4" type="stmt"/>
-        <line num="4" count="4" type="stmt"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="9" count="4" type="stmt"/>
-        <line num="12" count="4" type="stmt"/>
-        <line num="13" count="4" type="stmt"/>
-        <line num="17" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="50" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="56" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="65" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="69" count="0" type="stmt"/>
-        <line num="71" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
+        <metrics statements="44" coveredstatements="44" conditionals="8" coveredconditionals="8" methods="18" coveredmethods="18"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="2" count="8" type="stmt"/>
+        <line num="3" count="8" type="stmt"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="10" count="8" type="stmt"/>
+        <line num="13" count="64" type="stmt"/>
+        <line num="14" count="64" type="stmt"/>
+        <line num="18" count="43" type="stmt"/>
+        <line num="20" count="41" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="26" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="30" count="5" type="stmt"/>
+        <line num="32" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="39" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="59" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="63" count="3" type="stmt"/>
+        <line num="65" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="74" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="78" count="4" type="stmt"/>
+        <line num="80" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="85" count="2" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="97" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.ranking">
-      <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="ranking.module.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\ranking\ranking.module.ts">
-        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="0" type="stmt"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-      </file>
-    </package>
-    <package name="src.ranking.controllers">
-      <metrics statements="16" coveredstatements="7" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="1"/>
-      <file name="ranking.controller.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\ranking\controllers\ranking.controller.ts">
-        <metrics statements="16" coveredstatements="7" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="1"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="16" count="0" type="cond" truecount="0" falsecount="3"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.ranking.controllers">
+      <metrics statements="15" coveredstatements="15" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+      <file name="ranking.controller.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\ranking\controllers\ranking.controller.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="2" type="cond" truecount="3" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.ranking.services">
-      <metrics statements="17" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
+      <metrics statements="23" coveredstatements="23" conditionals="5" coveredconditionals="5" methods="10" coveredmethods="10"/>
       <file name="ranking.service.ts" path="C:\Users\agard\Documents\IUT\BUT3\R6_05_Developpement_Avance\TP\realtime-elo-ranker-master\apps\realtime-elo-ranker-server\src\ranking\services\ranking.service.ts">
-        <metrics statements="17" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
+        <metrics statements="23" coveredstatements="23" conditionals="5" coveredconditionals="5" methods="10" coveredmethods="10"/>
         <line num="1" count="6" type="stmt"/>
         <line num="2" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
-        <line num="4" count="6" type="stmt"/>
         <line num="5" count="6" type="stmt"/>
         <line num="6" count="6" type="stmt"/>
-        <line num="7" count="6" type="stmt"/>
-        <line num="15" count="6" type="stmt"/>
-        <line num="16" count="6" type="stmt"/>
-        <line num="20" count="6" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="15" count="41" type="stmt"/>
+        <line num="18" count="41" type="stmt"/>
+        <line num="19" count="41" type="stmt"/>
+        <line num="21" count="41" type="stmt"/>
+        <line num="25" count="43" type="stmt"/>
+        <line num="26" count="42" type="cond" truecount="3" falsecount="0"/>
+        <line num="27" count="41" type="stmt"/>
+        <line num="33" count="6" type="stmt"/>
+        <line num="37" count="5" type="stmt"/>
+        <line num="38" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="43" count="5" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
       </file>
     </package>
   </project>

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Player } from '../entities/player.entity';
 import { CreatePlayerDto } from '../dto/create-player.dto';
+import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { EventsService } from '../../events/services/events.service';
 
 @Injectable()
@@ -69,22 +70,25 @@ export class PlayerService {
       .catch(error => callback(error));
   }
 
-  update(player: Player, callback: (error: any) => void) {
-    if (!player.id) {
+  update(updatePlayerDto: UpdatePlayerDto, callback: (error: any) => void) {
+    if (!updatePlayerDto.id) {
       return callback(new BadRequestException('L\'identifiant du joueur n\'est pas valide'));
     }
-
-    this.playerRepository.findOne({ where: { id: player.id } })
+  
+    this.playerRepository.findOne({ where: { id: updatePlayerDto.id } })
       .then(existingPlayer => {
         if (!existingPlayer) {
           return callback(new UnprocessableEntityException('Le joueur n\'existe pas'));
         }
-
-        this.playerRepository.save(player)
+  
+        // Remove the redundant findOne call and use existingPlayer instead
+        existingPlayer.rank = updatePlayerDto.rank; // Update rank from DTO
+        
+        this.playerRepository.save(existingPlayer)
           .then(() => {
             this.eventsService.emitRankingUpdate({
-              id: player.id,
-              rank: player.rank
+              id: existingPlayer.id,
+              rank: existingPlayer.rank
             });
             callback(null);
           })

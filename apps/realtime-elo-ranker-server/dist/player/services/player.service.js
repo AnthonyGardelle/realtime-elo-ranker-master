@@ -71,20 +71,21 @@ let PlayerService = class PlayerService {
         })
             .catch(error => callback(error));
     }
-    update(player, callback) {
-        if (!player.id) {
+    update(updatePlayerDto, callback) {
+        if (!updatePlayerDto.id) {
             return callback(new common_1.BadRequestException('L\'identifiant du joueur n\'est pas valide'));
         }
-        this.playerRepository.findOne({ where: { id: player.id } })
+        this.playerRepository.findOne({ where: { id: updatePlayerDto.id } })
             .then(existingPlayer => {
             if (!existingPlayer) {
                 return callback(new common_1.UnprocessableEntityException('Le joueur n\'existe pas'));
             }
-            this.playerRepository.save(player)
+            existingPlayer.rank = updatePlayerDto.rank;
+            this.playerRepository.save(existingPlayer)
                 .then(() => {
                 this.eventsService.emitRankingUpdate({
-                    id: player.id,
-                    rank: player.rank
+                    id: existingPlayer.id,
+                    rank: existingPlayer.rank
                 });
                 callback(null);
             })

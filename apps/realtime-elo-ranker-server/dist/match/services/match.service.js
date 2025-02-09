@@ -71,11 +71,19 @@ let MatchService = class MatchService {
                 match.loserRank = loser.rank;
                 match.draw = createMatchDto.draw;
                 this.matchRepository.save(match).then(savedMatch => {
-                    this.playerService.update(winner, (error) => {
+                    const updateWinnerDto = {
+                        id: winner.id,
+                        rank: newWinnerRank
+                    };
+                    const updateLoserDto = {
+                        id: loser.id,
+                        rank: newLoserRank
+                    };
+                    this.playerService.update(updateWinnerDto, (error) => {
                         if (error) {
                             return callback(error);
                         }
-                        this.playerService.update(loser, (error) => {
+                        this.playerService.update(updateLoserDto, (error) => {
                             if (error) {
                                 return callback(error);
                             }

@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { Player } from '../entities/player.entity';
 import { CreatePlayerDto } from '../dto/create-player.dto';
+import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { EventsService } from '../../events/services/events.service';
 export declare class PlayerService {
     private playerRepository;
@@ -9,5 +10,5 @@ export declare class PlayerService {
     findAll(callback: (error: any, result?: Player[]) => void): void;
     create(createPlayerDto: CreatePlayerDto, callback: (error: any, result?: any) => void): void;
     findOne(id: string, callback: (error: any, result?: any) => void): void;
-    update(player: Player, callback: (error: any) => void): void;
+    update(updatePlayerDto: UpdatePlayerDto, callback: (error: any) => void): void;
 }

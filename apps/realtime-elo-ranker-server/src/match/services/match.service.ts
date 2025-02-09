@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Match } from '../entities/match.entity';
 import { PlayerService } from '../../player/services/player.service'
+import { UpdatePlayerDto } from '../../player/dto/update-player.dto';
 import { CreateMatchDto } from '../dto/create-match.dto';
 
 @Injectable()
@@ -67,11 +68,19 @@ export class MatchService {
         match.draw = createMatchDto.draw;
 
         this.matchRepository.save(match).then(savedMatch => {
-          this.playerService.update(winner, (error) => {
+            const updateWinnerDto: UpdatePlayerDto = { 
+              id: winner.id, 
+              rank: newWinnerRank 
+            };
+            const updateLoserDto: UpdatePlayerDto = { 
+              id: loser.id, 
+              rank: newLoserRank 
+            };
+            this.playerService.update(updateWinnerDto, (error) => {
             if (error) {
               return callback(error);
             }
-            this.playerService.update(loser, (error) => {
+            this.playerService.update(updateLoserDto, (error) => {
               if (error) {
                 return callback(error);
               }
