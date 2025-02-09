@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, BadRequestException, ConflictException, UnprocessableEntityException } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException, ConflictException, HttpCode, HttpException } from '@nestjs/common';
 import { PlayerService } from '../services/player.service';
 import { CreatePlayerDto } from '../dto/create-player.dto';
 
@@ -7,14 +7,25 @@ export class PlayerController {
   constructor(private readonly playerService: PlayerService) { }
 
   @Post()
+  @HttpCode(200)
   create(@Body() createPlayerDto: CreatePlayerDto) {
     return new Promise((resolve, reject) => {
       this.playerService.create(createPlayerDto, (error, result) => {
         if (error) {
+          let errorResponse;
+          
           if (error instanceof BadRequestException) {
-            resolve({ code: 400, message: error.message });
+            errorResponse = {
+              code: 400,
+              message: error.message
+            };
+            reject(new BadRequestException(errorResponse));
           } else if (error instanceof ConflictException) {
-            resolve({ code: 409, message: error.message });
+            errorResponse = {
+              code: 409,
+              message: error.message
+            };
+            reject(new ConflictException(errorResponse));
           } else {
             reject(error);
           }

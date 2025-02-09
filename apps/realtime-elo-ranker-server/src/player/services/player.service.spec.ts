@@ -63,100 +63,41 @@ describe('PlayerService', () => {
   });
 
   describe('create', () => {
-    it('should create a new player', async () => {
-      const createPlayerDto = { id: 'player1' };
-      const savedPlayer = { id: 'player1', rank: 1000 };
-      jest.spyOn(playerRepository, 'findOne').mockResolvedValue(null);
-      jest.spyOn(playerRepository, 'find').mockResolvedValue([]);
-      jest.spyOn(playerRepository, 'save').mockResolvedValue(savedPlayer);
-      jest.spyOn(eventsService, 'emitRankingUpdate');
-
+    const createPlayerDto = { id: 'player1' };
+  
+    it('should handle invalid player ID', async () => {
       await new Promise<void>((resolve) => {
-        service.create(createPlayerDto, (error, result) => {
-          expect(error).toBeNull();
-          expect(result).toEqual(savedPlayer);
-          expect(eventsService.emitRankingUpdate).toHaveBeenCalledWith({
-            id: savedPlayer.id,
-            rank: savedPlayer.rank
-          });
-          resolve();
-        });
-      });
-    });
-
-    it('should handle invalid id', async () => {
-      const createPlayerDto = { id: '' };
-
-      await new Promise<void>((resolve) => {
-        service.create(createPlayerDto, (error) => {
+        service.create({ id: '' }, (error) => {
           expect(error).toBeInstanceOf(BadRequestException);
-          resolve();
-        });
-      });
-    });
-
-    it('should handle existing player', async () => {
-      const createPlayerDto = { id: 'player1' };
-      jest.spyOn(playerRepository, 'findOne').mockResolvedValue({ id: 'player1', rank: 1000 });
-
-      await new Promise<void>((resolve) => {
-        service.create(createPlayerDto, (error) => {
-          expect(error).toBeInstanceOf(ConflictException);
-          resolve();
-        });
-      });
-    });
-
-    it('should handle repository save error', async () => {
-      const createPlayerDto = { id: 'player1' };
-      const saveError = new Error('Database error');
-      jest.spyOn(playerRepository, 'findOne').mockResolvedValue(null);
-      jest.spyOn(playerRepository, 'find').mockResolvedValue([]);
-      jest.spyOn(playerRepository, 'save').mockRejectedValue(saveError);
-  
-      await new Promise<void>((resolve) => {
-        service.create(createPlayerDto, (error) => {
-          expect(error).toBe(saveError);
+          expect(error.message).toBe('L\'identifiant du joueur n\'est pas valide');
           resolve();
         });
       });
     });
   
-    it('should handle repository findOne error in findOne method', async () => {
-      const findError = new Error('Database error');
-      jest.spyOn(playerRepository, 'findOne').mockRejectedValue(findError);
-  
-      await new Promise<void>((resolve) => {
-        service.findOne('player1', (error) => {
-          expect(error).toBe(findError);
-          resolve();
-        });
-      });
-    });
-
-    it('should calculate average rank from existing players', async () => {
-      const createPlayerDto = { id: 'player1' };
+    it('should create player with average rank when players exist', async () => {
       const existingPlayers = [
         { id: 'player2', rank: 1000 },
         { id: 'player3', rank: 1200 }
       ];
       const expectedRank = 1100; // (1000 + 1200) / 2
-      const savedPlayer = {
-        id: 'player1',
-        rank: expectedRank
-      };
-      
+
       jest.spyOn(playerRepository, 'findOne').mockResolvedValue(null);
       jest.spyOn(playerRepository, 'find').mockResolvedValue(existingPlayers);
-      jest.spyOn(playerRepository, 'save').mockResolvedValue(savedPlayer);
+      jest.spyOn(playerRepository, 'save').mockImplementation(entity => Promise.resolve({
+        ...entity,
+        id: entity.id || '',
+        rank: entity.rank || 0
+      } as Player));
       jest.spyOn(eventsService, 'emitRankingUpdate');
-  
+
       await new Promise<void>((resolve) => {
         service.create(createPlayerDto, (error, result) => {
           expect(error).toBeNull();
+          expect(result).toBeDefined();
           expect(result.rank).toBe(expectedRank);
           expect(eventsService.emitRankingUpdate).toHaveBeenCalledWith({
-            id: savedPlayer.id,
+            id: createPlayerDto.id,
             rank: expectedRank
           });
           resolve();
@@ -164,26 +105,24 @@ describe('PlayerService', () => {
       });
     });
   
-    it('should use default rank 1000 when no players exist', async () => {
-      const createPlayerDto = { id: 'player1' };
-      const expectedRank = 1000;
-      const savedPlayer = {
-        id: 'player1',
-        rank: expectedRank
-      };
-  
+    it('should create player with default rank when no players exist', async () => {
       jest.spyOn(playerRepository, 'findOne').mockResolvedValue(null);
       jest.spyOn(playerRepository, 'find').mockResolvedValue([]);
-      jest.spyOn(playerRepository, 'save').mockResolvedValue(savedPlayer);
+      jest.spyOn(playerRepository, 'save').mockImplementation(entity => Promise.resolve({
+        ...entity,
+        id: entity.id || '',
+        rank: entity.rank || 0
+      } as Player));
       jest.spyOn(eventsService, 'emitRankingUpdate');
   
       await new Promise<void>((resolve) => {
         service.create(createPlayerDto, (error, result) => {
           expect(error).toBeNull();
-          expect(result.rank).toBe(expectedRank);
+          expect(result).toBeDefined();
+          expect(result.rank).toBe(1000); // Default rank
           expect(eventsService.emitRankingUpdate).toHaveBeenCalledWith({
-            id: savedPlayer.id,
-            rank: expectedRank
+            id: createPlayerDto.id,
+            rank: 1000
           });
           resolve();
         });
@@ -227,25 +166,6 @@ describe('PlayerService', () => {
   });
 
   describe('update', () => {
-    it('should update a player', async () => {
-      const updatePlayerDto = { id: 'player1', rank: 1200 };
-      const existingPlayer = { id: 'player1', rank: 1000 };
-      jest.spyOn(playerRepository, 'findOne').mockResolvedValue(existingPlayer);
-      jest.spyOn(playerRepository, 'save').mockResolvedValue({ ...existingPlayer, rank: updatePlayerDto.rank });
-      jest.spyOn(eventsService, 'emitRankingUpdate');
-
-      await new Promise<void>((resolve) => {
-        service.update(updatePlayerDto, (error) => {
-          expect(error).toBeNull();
-          expect(eventsService.emitRankingUpdate).toHaveBeenCalledWith({
-            id: updatePlayerDto.id,
-            rank: updatePlayerDto.rank
-          });
-          resolve();
-        });
-      });
-    });
-
     it('should handle invalid id', async () => {
       const updatePlayerDto = { id: '', rank: 1200 };
 

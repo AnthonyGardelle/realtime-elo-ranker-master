@@ -24,11 +24,20 @@ let MatchController = class MatchController {
         return new Promise((resolve, reject) => {
             this.matchService.create(createMatchDto, (error, result) => {
                 if (error) {
+                    let errorResponse;
                     if (error instanceof common_1.UnprocessableEntityException) {
-                        resolve({ "code": 422, "message": error.message });
+                        errorResponse = {
+                            code: 422,
+                            message: error.message
+                        };
+                        reject(new common_1.UnprocessableEntityException(errorResponse));
                     }
                     else if (error instanceof common_1.BadRequestException) {
-                        resolve({ "code": 400, "message": error.message });
+                        errorResponse = {
+                            code: 400,
+                            message: error.message
+                        };
+                        reject(new common_1.BadRequestException(errorResponse));
                     }
                     else {
                         reject(error);
@@ -44,6 +53,7 @@ let MatchController = class MatchController {
 exports.MatchController = MatchController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_match_dto_1.CreateMatchDto]),

@@ -46,10 +46,6 @@ describe('MatchController', () => {
     matchService = module.get<MatchService>(MatchService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-
   describe('create', () => {
     const createMatchDto = {
       winner: 'player1',
@@ -77,22 +73,32 @@ describe('MatchController', () => {
       const error = new UnprocessableEntityException('Player not found');
       jest.spyOn(matchService, 'create').mockImplementation((dto, callback) => callback(error));
 
-      const result = await controller.create(createMatchDto);
-      expect(result).toEqual({
-        code: 422,
-        message: error.message
-      });
+      try {
+        await controller.create(createMatchDto);
+        fail('should have thrown an error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(UnprocessableEntityException);
+        expect(e.response).toEqual({
+          code: 422,
+          message: error.message
+        });
+      }
     });
 
     it('should handle BadRequestException', async () => {
       const error = new BadRequestException('Invalid match');
       jest.spyOn(matchService, 'create').mockImplementation((dto, callback) => callback(error));
 
-      const result = await controller.create(createMatchDto);
-      expect(result).toEqual({
-        code: 400,
-        message: error.message
-      });
+      try {
+        await controller.create(createMatchDto);
+        fail('should have thrown an error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response).toEqual({
+          code: 400,
+          message: error.message
+        });
+      }
     });
 
     it('should reject unknown errors', async () => {

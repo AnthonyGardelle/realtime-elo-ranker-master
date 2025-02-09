@@ -35,10 +35,6 @@ describe('PlayerController', () => {
     playerService = module.get<PlayerService>(PlayerService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-
   describe('create', () => {
     const createPlayerDto = { id: 'player1' };
 
@@ -54,22 +50,32 @@ describe('PlayerController', () => {
       const error = new BadRequestException('Invalid player ID');
       jest.spyOn(playerService, 'create').mockImplementation((dto, callback) => callback(error));
 
-      const response = await controller.create(createPlayerDto);
-      expect(response).toEqual({
-        code: 400,
-        message: error.message
-      });
+      try {
+        await controller.create(createPlayerDto);
+        fail('should have thrown an error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+        expect(e.response).toEqual({
+          code: 400,
+          message: error.message
+        });
+      }
     });
 
     it('should handle ConflictException', async () => {
       const error = new ConflictException('Player already exists');
       jest.spyOn(playerService, 'create').mockImplementation((dto, callback) => callback(error));
 
-      const response = await controller.create(createPlayerDto);
-      expect(response).toEqual({
-        code: 409,
-        message: error.message
-      });
+      try {
+        await controller.create(createPlayerDto);
+        fail('should have thrown an error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(ConflictException);
+        expect(e.response).toEqual({
+          code: 409,
+          message: error.message
+        });
+      }
     });
 
     it('should reject unknown errors', async () => {

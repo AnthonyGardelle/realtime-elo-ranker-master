@@ -15,19 +15,25 @@ export class SimulatorService implements OnApplicationBootstrap {
   }
 
   async onApplicationBootstrap() {
-    // Enregistre d'abord tous les joueurs
     await this.registerAllPlayers();
-    // Puis démarre la simulation
     setInterval(() => this.simulateMatch(), 500);
   }
 
   private async registerAllPlayers() {
     for (const player of this.players) {
+      if (this.registeredPlayers.includes(player)) {
+        console.log(`Le joueur ${player} est déjà enregistré.`);
+        continue;
+      }
       try {
-        // Tente d'enregistrer le joueur
         await firstValueFrom(
           this.httpService.post(`${this.apiUrl}/player`, { id: player }).pipe(
             catchError(error => {
+              if (error.response?.status === 409) {
+                this.registeredPlayers.push(player);
+                console.log(`Joueur existant ajouté à la liste: ${player}`);
+                return [];
+              }
               console.error(`Erreur lors de la création du joueur ${player}:`, error?.response?.data || error?.message);
               return [];
             })
@@ -36,7 +42,7 @@ export class SimulatorService implements OnApplicationBootstrap {
         this.registeredPlayers.push(player);
         console.log(`Joueur enregistré: ${player}`);
       } catch (error) {
-        console.error(`Impossible d'enregistrer le joueur ${player}`);
+        console.error(`Impossible de crée le joueur ${player} en BD car déjà éxistant`);
       }
     }
   }
@@ -47,20 +53,24 @@ export class SimulatorService implements OnApplicationBootstrap {
       return;
     }
 
-    // Sélectionne 2 joueurs aléatoires parmi les joueurs enregistrés
     const [player1, player2] = this.selectRandomPlayers();
 
-    // 10% de chances de match nul
     const isDraw = Math.random() < 0.1;
 
-    // Résultat final
+    const random = Math.random() < 0.5;
+
     const matchResult = {
-      winner: isDraw ? player1 : (Math.random() < 0.5 ? player1 : player2),
-      loser: isDraw ? player2 : (Math.random() < 0.5 ? player2 : player1),
+      winner: random ? player1 : player2,
+      loser: random ? player2 : player1,
       draw: isDraw
     };
 
-    // Envoi au serveur
+    if (matchResult.winner === matchResult.loser) {
+      console.log(`\x1b[31mLes joueurs ${matchResult.winner} et ${matchResult.loser} sont les mêmes, on recommence.\x1b[0m`);
+    } else {
+      console.log(`Match simulé: ${matchResult.winner} gagne contre ${matchResult.loser}${isDraw ? ' (match nul)' : ''}`);
+    }
+
     this.httpService.post(`${this.apiUrl}/match`, matchResult)
       .pipe(
         catchError(error => {
@@ -79,8 +89,13 @@ export class SimulatorService implements OnApplicationBootstrap {
     const player1 = availablePlayers[player1Index];
     availablePlayers.splice(player1Index, 1);
 
-    const player2Index = Math.floor(Math.random() * availablePlayers.length); 
+    const player2Index = Math.floor(Math.random() * availablePlayers.length);
     const player2 = availablePlayers[player2Index];
+
+    if (player1 === player2 && availablePlayers.length > 1) {
+      console.log(`Les joueurs ${player1} et ${player2} sont les mêmes, on recommence.`);
+      return this.selectRandomPlayers();
+    }
 
     return [player1, player2];
   }

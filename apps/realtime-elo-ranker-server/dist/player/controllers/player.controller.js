@@ -24,11 +24,20 @@ let PlayerController = class PlayerController {
         return new Promise((resolve, reject) => {
             this.playerService.create(createPlayerDto, (error, result) => {
                 if (error) {
+                    let errorResponse;
                     if (error instanceof common_1.BadRequestException) {
-                        resolve({ code: 400, message: error.message });
+                        errorResponse = {
+                            code: 400,
+                            message: error.message
+                        };
+                        reject(new common_1.BadRequestException(errorResponse));
                     }
                     else if (error instanceof common_1.ConflictException) {
-                        resolve({ code: 409, message: error.message });
+                        errorResponse = {
+                            code: 409,
+                            message: error.message
+                        };
+                        reject(new common_1.ConflictException(errorResponse));
                     }
                     else {
                         reject(error);
@@ -44,6 +53,7 @@ let PlayerController = class PlayerController {
 exports.PlayerController = PlayerController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_player_dto_1.CreatePlayerDto]),

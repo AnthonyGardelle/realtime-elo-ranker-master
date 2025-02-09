@@ -27,6 +27,9 @@ let RankingService = class RankingService {
             if (!error && players) {
                 this.rankings = players.sort((a, b) => b.rank - a.rank);
             }
+            else {
+                console.error('Error while initializing rankings:', error);
+            }
         });
     }
     getRanking(callback) {

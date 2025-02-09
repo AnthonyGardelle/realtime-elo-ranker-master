@@ -36,10 +36,6 @@ describe('RankingController', () => {
     rankingService = module.get<RankingService>(RankingService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-
   describe('getRanking', () => {
     it('should get ranking successfully', async () => {
       const ranking = [{ id: 'player1', rank: 1000 }];
@@ -50,9 +46,22 @@ describe('RankingController', () => {
     });
 
     it('should handle empty ranking', async () => {
-      jest.spyOn(rankingService, 'getRanking').mockImplementation(cb => cb(null, []));
+      const error = new NotFoundException({
+        code: 404,
+        message: "Le classement n'est pas disponible car aucun joueur n'existe"
+      });
+      jest.spyOn(rankingService, 'getRanking').mockImplementation(cb => cb(error));
 
-      await expect(controller.getRanking()).rejects.toThrow(NotFoundException);
+      try {
+        await controller.getRanking();
+        fail('should have thrown an error');
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+        expect(e.response).toEqual({
+          code: 404,
+          message: "Le classement n'est pas disponible car aucun joueur n'existe"
+        });
+      }
     });
 
     it('should handle ranking service error', async () => {

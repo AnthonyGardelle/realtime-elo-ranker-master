@@ -27,6 +27,17 @@ describe('EventsService', () => {
         });
     });
 
+    describe('emitPlayerCreated', () => {
+        it('should emit player created event', () => {
+            const player = { id: '1', rank: 1000 };
+            const emitSpy = jest.spyOn(service['rankingEmitter'], 'emit');
+
+            service.emitPlayerCreated(player);
+
+            expect(emitSpy).toHaveBeenCalledWith('playerCreated', player);
+        });
+    });
+
     describe('getRankingEmitter', () => {
         it('should return ranking emitter instance', () => {
             const emitter = service.getRankingEmitter();

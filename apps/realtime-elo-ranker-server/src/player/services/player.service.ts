@@ -23,7 +23,7 @@ export class PlayerService {
   }
 
   create(createPlayerDto: CreatePlayerDto, callback: (error: any, result?: any) => void) {
-    if (!createPlayerDto.id) {
+    if (!createPlayerDto.id || !createPlayerDto.id.trim()) {
       return callback(new BadRequestException('L\'identifiant du joueur n\'est pas valide'));
     }
 

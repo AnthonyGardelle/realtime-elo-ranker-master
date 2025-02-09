@@ -25,6 +25,8 @@ export class RankingService {
     this.playerService.findAll((error, players) => {
       if (!error && players) {
         this.rankings = players.sort((a, b) => b.rank - a.rank);
+      } else {
+        console.error('Error while initializing rankings:', error);
       }
     });
   }

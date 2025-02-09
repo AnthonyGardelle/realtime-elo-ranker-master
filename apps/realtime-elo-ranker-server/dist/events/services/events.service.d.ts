@@ -6,5 +6,9 @@ export declare class EventsService {
         id: string;
         rank: number;
     }): void;
+    emitPlayerCreated(player: {
+        id: string;
+        rank: number;
+    }): void;
     getRankingEmitter(): EventEmitter2;
 }

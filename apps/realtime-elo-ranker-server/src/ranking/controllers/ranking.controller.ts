@@ -1,4 +1,4 @@
-import { Controller, Get, NotFoundException, Sse } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Sse, HttpCode } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { RankingService } from '../services/ranking.service';
 
@@ -7,6 +7,7 @@ export class RankingController {
   constructor(private readonly rankingService: RankingService) { }
 
   @Get()
+  @HttpCode(200)
   getRanking() {
     return new Promise((resolve, reject) => {
       this.rankingService.getRanking((error, ranking) => {

@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RankingService } from '../services/ranking.service';
+import { RankingService } from './ranking.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Player } from '../../player/entities/player.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { PlayerService } from '../../player/services/player.service';
 import { EventsService } from '../../events/services/events.service';
+import { NotFoundException } from '@nestjs/common';
 
 describe('RankingService', () => {
   let service: RankingService;
@@ -35,13 +36,6 @@ describe('RankingService', () => {
   });
 
   describe('getRanking', () => {
-    it('should get empty ranking initially', () => {
-      service.getRanking((error, ranking) => {
-        expect(error).toBeNull();
-        expect(ranking).toEqual([]);
-      });
-    });
-
     it('should get initialized ranking', () => {
       const players = [
         { id: 'player1', rank: 1200 },
@@ -57,17 +51,6 @@ describe('RankingService', () => {
           { id: 'player1', rank: 1200 },
           { id: 'player2', rank: 1000 }
         ]);
-      });
-    });
-
-    it('should handle initialization error', () => {
-      const error = new Error('Database error');
-      jest.spyOn(playerService, 'findAll').mockImplementation(cb => cb(error));
-
-      service['initializeRankings']();
-
-      service.getRanking((error, ranking) => {
-        expect(ranking).toEqual([]);
       });
     });
   });

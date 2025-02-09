@@ -31,7 +31,7 @@ let PlayerService = class PlayerService {
             .catch(error => callback(error));
     }
     create(createPlayerDto, callback) {
-        if (!createPlayerDto.id) {
+        if (!createPlayerDto.id || !createPlayerDto.id.trim()) {
             return callback(new common_1.BadRequestException('L\'identifiant du joueur n\'est pas valide'));
         }
         this.playerRepository.findOne({ where: { id: createPlayerDto.id } })

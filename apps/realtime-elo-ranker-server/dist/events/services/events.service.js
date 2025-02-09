@@ -19,6 +19,9 @@ let EventsService = class EventsService {
     emitRankingUpdate(player) {
         this.rankingEmitter.emit('rankingUpdate', player);
     }
+    emitPlayerCreated(player) {
+        this.rankingEmitter.emit('playerCreated', player);
+    }
     getRankingEmitter() {
         return this.rankingEmitter;
     }

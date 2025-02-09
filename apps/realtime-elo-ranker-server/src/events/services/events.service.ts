@@ -12,6 +12,10 @@ export class EventsService {
         this.rankingEmitter.emit('rankingUpdate', player);
     }
 
+    emitPlayerCreated(player: { id: string; rank: number }): void {
+        this.rankingEmitter.emit('playerCreated', player);
+    }
+
     getRankingEmitter(): EventEmitter2 {
         return this.rankingEmitter;
     }
